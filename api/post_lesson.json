@@ -1,0 +1,19 @@
+[
+  {
+  "title": "физик",
+  "service_set": [
+    {
+      "title": "petux",
+      "image": "/media/service/logo.png",
+      "description": "fdsagdfsgdsf",
+      "best": true
+    },
+    {
+      "title": "petux2",
+      "image": "/media/service/logo.png",
+      "description": "fdsagdfsgdsf",
+      "best": true
+    }
+  ]
+}
+]

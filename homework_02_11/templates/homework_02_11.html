@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+    <title>Add to DataBase</title>
+</head>
+<body>
+<div>
+    <form action="" method="POST" enctype="multipart/form-data" id="send_data_form">
+        {% csrf_token %}
+        <input type="text" id='name' name="name" placeholder="Name" required>
+        <input type="number" id='price' name="price" placeholder="Price" required>
+        <input type="file" id="image" name="image" required>
+        <button type="submit">Send</button>
+    </form>
+</div>
+<script src="{% static 'js/homework_02_11.js' %}"></script>
+</body>
+</html>
