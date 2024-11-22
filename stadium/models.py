@@ -12,6 +12,20 @@ class CategoryOfService(models.Model):
         return self.title
 
 
+class PeopleCategory(models.Model):
+    """Model describes relationship"""
+    name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    category_user = models.ManyToManyField(CategoryOfService)
+
+    class Meta:
+        verbose_name = "Пользователь категории"
+        verbose_name_plural = "Пользователи категорий"
+
+    def __str__(self):
+        return self.name
+
+
 class TypeOfService(models.Model):
     """Модель описывает тип сервиса"""
     category_of_service_id = models.ForeignKey(CategoryOfService,

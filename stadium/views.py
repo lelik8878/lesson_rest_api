@@ -8,7 +8,7 @@ import json
 from stadium.models import CategoryOfService, TypeOfService, TypeOfSubService
 from stadium.serializers import (CategoryOfServiceSerializer, TypeOfServiceSerializer,
                                  TypeOfServiceSerializerExcludeForeignKey, TypeOfSubServiceSerializer,
-                                 SpecificObjectSerializer)
+                                 SpecificObjectSerializer, PeopleCategorySerializer)
 
 
 @api_view(['GET'])
@@ -103,4 +103,50 @@ def save_or_create(request):
                 print(new_type_of_service.__dict__)
                 #new_type_of_service.save()
     return Response({"message": "Johan"})
+
+
+class PeopleListView(APIView):
+    def get(self, request):
+        return Response({"message": "Johan"})
+
+    def post(self, request):
+        received_data_from_victor = [{
+        "name": "Иван",
+        "last_name": "Иванов",
+        "category_user": [
+            {
+                "title": "Консультации"
+            },
+            {
+                "title": "Обучение"
+            }
+        ]
+        },
+        {
+            "name": "Мария",
+            "last_name": "Петрова",
+            "category_user": [
+                {
+                    "title": "Консультации"
+                }
+            ]
+        },
+        {
+            "name": "Алексей",
+            "last_name": "Сидоров",
+            "category_user": [
+                {
+                    "title": "Поддержка"
+                },
+                {
+                    "title": "Обучение"
+                }
+            ]
+        }]
+        received_data = PeopleCategorySerializer(data=received_data_from_victor, many=True)
+        if received_data.is_valid():
+            print(received_data.validated_data, '+++++++++++++++++')
+            # received_data.create(received_data.validated_data)
+            return Response({"message": "success"})
+        return Response(received_data.errors)
 
