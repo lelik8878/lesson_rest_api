@@ -1,4 +1,5 @@
 
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -30,6 +31,9 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('homework_02_11/', include('homework_02_11.urls')),
     path('stadium_api/', include('stadium.urls')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('lesson_signal/', include('lesson_signal.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
