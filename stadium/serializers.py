@@ -2,6 +2,8 @@ from enum import unique
 
 from rest_framework import serializers
 
+from stadium.models import PeopleCategory, CategoryOfService
+
 
 class CategoryOfServiceSerializer(serializers.Serializer):
     title = serializers.CharField()
@@ -43,7 +45,11 @@ class PeopleCategorySerializer(serializers.Serializer):
 
     def create(self, validated_data):
         print(validated_data, '--------------------')
-        for pre_create_dict in validated_data:
-            pass
-            # print(pre_create_dict)
-            # name = validated_data.pop('name')
+        category_users = validated_data.pop('category_user')
+        print(validated_data, '-2-2-2-2-2-2-2-2-2-2-2-2-2---------')
+        people_category_instance = PeopleCategory.objects.create(**validated_data)
+        for pre_create_dict in category_users:
+            category_of_service_instance, created = CategoryOfService.objects.get_or_create(**pre_create_dict)
+            people_category_instance.category_user.add(category_of_service_instance)
+        return people_category_instance
+

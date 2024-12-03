@@ -1,6 +1,10 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from rest_framework import status
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import json
@@ -106,6 +110,8 @@ def save_or_create(request):
 
 
 class PeopleListView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         return Response({"message": "Johan"})
 
@@ -147,6 +153,13 @@ class PeopleListView(APIView):
         if received_data.is_valid():
             print(received_data.validated_data, '+++++++++++++++++')
             # received_data.create(received_data.validated_data)
+            # received_data.save()
             return Response({"message": "success"})
         return Response(received_data.errors)
 
+
+class RegisterView(APIView):
+    def post(self, request):
+        user = User.objects.create_user(username=request.data['username'], password=request.data['password'])
+        token = Token.objects.create(user=user)
+        return Response({'token': token.key})
