@@ -6,3 +6,8 @@ class Sun(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Weather(models.Model):
+    name = models.CharField(max_length=255)
+    sun = models.OneToOneField(Sun, on_delete=models.CASCADE)
