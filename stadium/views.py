@@ -110,7 +110,7 @@ def save_or_create(request):
 
 
 class PeopleListView(APIView):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    # authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request):
         return Response({"message": "Johan"})
