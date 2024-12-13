@@ -15,6 +15,7 @@ function getTokenData() {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Cookie': 'name=Johan',
         },
         body: JSON.stringify({username: ourLogin.value, password: ourPassword.value})
     }) .then(response=> {
@@ -28,6 +29,10 @@ function getTokenData() {
         }
         }) .then(tokenData=>{
             console.log(tokenData)
+            document.cookie = "name=Johan; path=/";
+            alert(document.cookie);
+            const cookies = document.cookie;
+            console.log(cookies);
             localStorage.setItem('access', tokenData.access);
             localStorage.setItem('refresh', tokenData['refresh']);
             let body = document.getElementById('body');

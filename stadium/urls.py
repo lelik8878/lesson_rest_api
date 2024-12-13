@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (get_category_of_service, get_type_of_services, get_type_of_sub_services,
-                    get_specific_object, Category, save_or_create, PeopleListView, RegisterView)
+                    get_specific_object, Category, save_or_create, PeopleListView, RegisterView,
+                    set_cookie_lesson_drf)
 urlpatterns = [
     path('', get_category_of_service),
     path('type_of_services/', get_type_of_services),

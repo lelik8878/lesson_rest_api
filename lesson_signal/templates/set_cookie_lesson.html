@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>set_cookie</title>
+</head>
+<body>
+<div>
+    <label>login<input type="text" id="login_cookie"></label>
+    <label>password<input type="password" id="password_cookie"></label>
+    <input type="button" value="send" id="submit">
+</div>
+<div>
+    <input type="button" value="send with cookie" id="send_with_cookie">
+</div>
+<script src={% static  'js/set_cookie.js'%}></script>
+</body>
+</html>

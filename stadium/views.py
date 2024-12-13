@@ -1,13 +1,16 @@
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import json
+
+from rest_framework_simplejwt.serializers import TokenObtainSerializer, TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from stadium.models import CategoryOfService, TypeOfService, TypeOfSubService
 from stadium.serializers import (CategoryOfServiceSerializer, TypeOfServiceSerializer,
@@ -163,3 +166,31 @@ class RegisterView(APIView):
         user = User.objects.create_user(username=request.data['username'], password=request.data['password'])
         token = Token.objects.create(user=user)
         return Response({'token': token.key})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def set_cookie_lesson_drf(request):
+    print(request.COOKIES)
+    print(request.headers)
+    my_response_with_cookie = Response({'name': 'Вредный Алекс'})
+    my_response_with_cookie.set_cookie(key='name', value='Alex')
+    return my_response_with_cookie
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class =  TokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        tokens = serializer.validated_data
+        response = Response()
+        response.set_cookie(key='access_token', value=str(tokens['access']), httponly=True, path='/')
+        response.set_cookie(key='refresh_token', value=str(tokens['refresh']), httponly=True, path='/')
+        response.data = {'message': 'Аутентификация успешна!'}
+        return response
+
+
+def set_cookie_page(request):
+    return render(request, 'set_cookie_lesson.html')
