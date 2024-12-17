@@ -171,8 +171,6 @@ class RegisterView(APIView):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def set_cookie_lesson_drf(request):
-    print(request.COOKIES)
-    print(request.headers)
     my_response_with_cookie = Response({'name': 'Вредный Алекс'})
     my_response_with_cookie.set_cookie(key='name', value='Alex')
     return my_response_with_cookie
@@ -186,8 +184,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         serializer.is_valid(raise_exception=True)
         tokens = serializer.validated_data
         response = Response()
-        response.set_cookie(key='access_token', value=str(tokens['access']), httponly=True, path='/')
-        response.set_cookie(key='refresh_token', value=str(tokens['refresh']), httponly=True, path='/')
+        response.set_cookie(key='access', value=str(tokens['access']), httponly=True, path='/')
+        response.set_cookie(key='refresh', value=str(tokens['refresh']), httponly=True, path='/')
         response.data = {'message': 'Аутентификация успешна!'}
         return response
 

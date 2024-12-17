@@ -29,7 +29,6 @@ function getAlex() {
             credentials: 'include',
         headers:{
             'Content-Type': 'application/json',
-             'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
         }
         }) .then(response => response.json())
                 .then(alex => console.log(alex))
